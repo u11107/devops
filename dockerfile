@@ -1,7 +1,7 @@
-FROM ubuntu:18.04
-LABEL devops eeenot84@gmail.com
-RUN apt-get update
-RUN apt-get apt install tomcat8
-RUN apt-get install apt install nginx-core
-EXPOSE 8080
-CMD ["catalina.sh", "run"]
+FROM node
+ LABEL practic eeenot84@gmail.com
+ RUN git clone -q https://github.com/u11107/devops
+ WORKDIR devops
+ RUN npm install > /dev/null
+ EXPOSE 8000
+ CMD ["npm","start"]
