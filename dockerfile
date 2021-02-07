@@ -7,4 +7,8 @@ FROM tomcat:9
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 RUN cd boxfuse-sample-java-war-hello && mvn package pom.xml
 EXPOSE 8080
+<<<<<<< HEAD
 CMD ["catalina.sh", "run"]
+=======
+CMD ["catalina.sh", "run"]
+>>>>>>> 67
