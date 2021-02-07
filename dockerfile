@@ -10,4 +10,9 @@ RUN cd boxfuse-sample-java-war-hello/target && cp -a hello-1.0.war /var/lib/tomc
 RUN apt install mlocate
 RUN  mlocate catalina.sh
 EXPOSE 8080
+<<<<<<< HEAD
 CMD ["usr/share/tomcat9/bin/catalina.sh", "run"]
+=======
+RUN chmod 777 /usr/share/tomcat9/bin/catalina.sh
+CMD ["/usr/share/tomcat9/bin/catalina.sh", "run"]
+>>>>>>> 4fc3babd7497b75aec92650cdb35a885af9bdb3b
