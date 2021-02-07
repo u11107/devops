@@ -1,13 +1,4 @@
-FROM ubuntu:20.04
-LABEL practic Rinat <Ren84@inbox.ru>
-RUN apt update
-WORKDIR /home
-RUN apt install default-jdk -y
-RUN apt install tomcat9 -y
-RUN apt install maven -y
-RUN apt install git -y
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-RUN cd /home/ mvn package
-COPY . ./webapps
+FROM tomcat:9
 EXPOSE 8080
+ADD hello-1.0.war /usr/local/tomcat/webapps
 CMD ["catalina.sh", "run"]
