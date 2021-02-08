@@ -1,4 +1,3 @@
-  GNU nano 4.8                                                  dockerfile
 FROM ubuntu:20.04
 RUN apt update
 RUN apt-get install wget -y
