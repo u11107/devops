@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     default-jdk\
     git\
     maven\
-&& rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /home/docker/
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 WORKDIR /home/docker/boxfuse-sample-java-war-hello/
