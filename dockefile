@@ -1,0 +1,6 @@
+FROM ubuntu:20.04
+RUN apt-get && apt-get install -y \
+wget\
+default-jdk\
+git\
+maven\
