@@ -1,15 +1,21 @@
+  GNU nano 4.8                                                  dockerfile
 FROM ubuntu:20.04
 RUN apt update
-RUN apt install default-jdk -y
-RUN apt install git -y 
-RUN apt install maven -y
-RUN rm -rf /usr/share/tomcat9/etc/server.xml
-RUN apt install tomcat9 -y
+RUN apt-get install wget -y
+RUN apt-get install default-jdk -y
+RUN apt-get install git -y
+RUN apt-get install maven -y
+WORKDIR /home/docker/
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-RUN cd boxfuse-sample-java-war-hello && mvn package
-RUN cd boxfuse-sample-java-war-hello/target && cp -a hello-1.0.war /var/lib/tomcat9/webapps
-RUN apt-get install mlocate
-RUN mlocate server.xml
-RUN chmod 777 /usr/share/tomcat9/bin/catalina.sh
+WORKDIR /home/docker/boxfuse-sample-java-war-hello/
+RUN mvn package
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
+RUN mkdir -p "$CATALINA_HOME"
+WORKDIR $CATALINA_HOME
+RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.43/bin/apache-tomcat-9.0.43.tar.gz -O /tmp/tomcat.tar.gz
+RUN cd /tmp && tar xvfz tomcat.tar.gz
+RUN cp -Rv /tmp/apache-tomcat-9.0.43/* /usr/local/tomcat/
 EXPOSE 8080
-CMD ["/usr/share/tomcat9/bin/catalina.sh", "run"]
+RUN cp /home/docker/boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]
