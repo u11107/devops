@@ -1,9 +1,10 @@
 FROM ubuntu:20.04
-RUN apt update
-RUN apt-get install wget -y
-RUN apt-get install default-jdk -y
-RUN apt-get install git -y
-RUN apt-get install maven -y
+RUN apt-get update && apt-get install -y \
+    wget\
+    default-jdk\
+    git\
+    maven\
+&& rm -rf /var/lib/apt/lists/*
 WORKDIR /home/docker/
 RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
 WORKDIR /home/docker/boxfuse-sample-java-war-hello/
