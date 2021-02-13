@@ -1,0 +1,63 @@
+---
+- name: install/package
+  hosts: build
+  become: yes
+
+  tasks:
+  - name: install git
+    apt:
+      name: git
+      state: present
+
+  - name: install maven
+    apt:
+      name: maven
+      state: present
+
+  - name: git clone
+    git:
+      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+      dest: /home/build
+
+  - name: package
+    command: mvn -f /home/build/pom.xml clean package
+
+- name: prod
+  hosts: web
+  become: yes
+
+  tasks:
+  - name: install default-jdk
+    apt:
+      name: default-jdk
+      state: present
+
+  - name: install tomcat
+    apt:
+      name: tomcat9
+      state: present
+
+- name: copy build from controller
+  hosts: build
+  become: yes
+
+  tasks:
+  - name: copy file hello
+    fetch:
+      src: /home/build/target/hello-1.0.war
+      dest: ./home
+      flat: true
+- name: copy controller from web
+  hosts: web
+  become: yes
+
+  tasks:
+  - name: copy web hello
+    copy:
+      src: /home/18.220.123.155/home/build/target/hello-1.0.war
+      dest: /var/lib/tomcat9/webapps
+
+  - name: ensure tomcat is state
+    service:
+     name: tomcat9
+     state: started
